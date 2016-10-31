@@ -13,9 +13,9 @@ using namespace std;
 
 ostream& operator << (ostream& output, Student& that) {
     output << "Student " << that.getName() << ":" << endl << endl;
-    output << "Classes:" << endl;
+    output << "Courses:" << endl;
     for (int i = 0; i < that.getNumCourses(); i++) {
-        output << "\t" << i+1 << that.getCourses()[i] << endl;
+        output << "\tCourse #" << i+1 << ": " << that.getCourses()[i] << endl;
     }
     return output;
 }
@@ -47,7 +47,7 @@ checknum:
     
     cout << endl << "Enter the courses:" << endl;
     for (int i = 0; i < numCourses; i++) {
-        cout << "Course #" << i + 1 << ": ";
+        cout << "\tCourse #" << i + 1 << ": ";
         temp.clear();
         cin >> temp;
         student.addCourse(temp);

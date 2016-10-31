@@ -14,27 +14,26 @@ class Student {
 private:
     std::string name;
     int numCourses = 0;
-    std::string *courseList = new std::string;
+    int currentCourse = 0;
+    std::string *courseList = new std::string[0];
     Student(){}
 public:
     
-    Student(const std::string& name, int numCourses) : name(name), numCourses(numCourses) {}
-    
-    Student(const std::string& name, int numCourses, std::string courseList[])
-    : name(name), numCourses(numCourses), courseList(courseList) {}
+    Student(const std::string& name, int numCourses) : name(name), numCourses(numCourses) {
+        this->courseList = new std::string[numCourses];
+    }
     
     Student(const Student& that)
     : name(that.name), numCourses(that.numCourses), courseList(that.courseList) {}
     
     Student& operator=(const Student& that) {
-        return *new Student(that.name,that.numCourses,that.courseList);
+        return *new Student(that);
     }
     
     friend std::ostream& operator << (const std::ostream& output, const Student& that);
     
     void addCourse(std::string courseName) {
-        this->courseList[this->numCourses] = courseName;
-        this->numCourses++;
+        this->courseList[currentCourse++] = courseName;
     }
     
     std::string getCourses() {
@@ -51,7 +50,7 @@ public:
     
     // Destructor
     ~Student() {
-        delete this->courseList;
+        delete[] this->courseList;
     }
     
 };
