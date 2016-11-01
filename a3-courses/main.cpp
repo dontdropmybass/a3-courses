@@ -20,44 +20,28 @@ ostream& operator << (ostream& output, Student& that) {
     return output;
 }
 
-bool is_number(const std::string& s) {
-    return !s.empty() && std::find_if(s.begin(),
-                                      s.end(), [](char c) { return !std::isdigit(c); }) == s.end();
-}
-
 int main(int argc, const char * argv[]) {
     string name;
-    int numCourses;
     cout << endl << "Input student name: ";
     getline(cin,name);
     cin.clear();
     string temp;
-    cout << endl << "Input number of courses student is in: ";
-checknum:
-    temp.clear();
-    getline(cin,temp);
-    cin.clear();
-    if (!is_number(temp)) {
-        temp.clear();
-        cout << endl << "That is not a valid number. Try again: ";
-        cin.clear();
-        goto checknum;
-    }
-    else {
-        numCourses = stoi(temp);
-    }
     
-    Student student = *new Student(name,numCourses);
-    
-    cout << endl << "Enter the courses:" << endl;
-    for (int i = 0; i < numCourses; i++) {
-        cout << "\tCourse #" << i + 1 << ": ";
+    Student student = *new Student(name);
+    while (true) {
+        cout << endl << "Next course: ";
         temp.clear();
         getline(cin,temp);
         cin.clear();
-        student.addCourse(temp);
+        if (temp=="") {
+            break;
+        }
+        else {
+            student.addCourse(temp);
+        }
     }
-    temp.clear();
+    cout << endl << student;
+    Student student2 = *new Student(student);
     cout << endl << student;
     cout << endl << "Continue? (Y,n): ";
     getline(cin,temp);

@@ -8,23 +8,24 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
 #include <iostream>
 
 class Student {
 private:
     std::string name;
     int numCourses = 0;
-    int currentCourse = 0;
-    std::string *courseList = new std::string[0];
+    std::string *courseList;
     Student(){}
+    
 public:
     
-    Student(const std::string& name, int numCourses) : name(name), numCourses(numCourses) {
-        this->courseList = new std::string[numCourses];
-    }
+    Student(const std::string& name) : name(name) {}
     
     Student(const Student& that)
-    : name(that.name), numCourses(that.numCourses), courseList(that.courseList) {}
+    : name(that.name), numCourses(that.numCourses), courseList(that.courseList) {
+        std::cout << std::endl << "Copied student." << std::endl;
+    }
     
     Student& operator=(const Student& that) {
         return *new Student(that);
@@ -33,8 +34,14 @@ public:
     friend std::ostream& operator << (const std::ostream& output, const Student& that);
     
     void addCourse(std::string courseName) {
-        this->courseList[currentCourse] = courseName;
-        currentCourse++;
+        std::string *temp = new std::string[numCourses+1];
+        for (int i = 0; i < numCourses; i++) {
+            temp[i] = this->courseList[i];
+        }
+        temp[numCourses] = courseName;
+        this->courseList = temp;
+        delete[] temp;
+        numCourses++;
     }
     
     std::string getCourses() {
@@ -51,7 +58,8 @@ public:
     
     // Destructor
     ~Student() {
-        delete[] this->courseList;
+        std::cout << std::endl << "Deleted student named " << this->name << std::endl;
+        try{delete[]this->courseList;}catch(...){}
     }
     
 };
