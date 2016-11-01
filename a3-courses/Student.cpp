@@ -33,7 +33,8 @@ public:
     friend std::ostream& operator << (const std::ostream& output, const Student& that);
     
     void addCourse(std::string courseName) {
-        this->courseList[currentCourse++] = courseName;
+        this->courseList[currentCourse] = courseName;
+        currentCourse++;
     }
     
     std::string getCourses() {
