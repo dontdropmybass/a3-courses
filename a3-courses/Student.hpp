@@ -12,5 +12,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "Student.cpp"
+#define _getch() system("read -n1 -p 'Press any key...\n' key");
+#define _cls()   std::cout << string(50, '\n');
 
 #endif /* Student_hpp */

@@ -20,16 +20,16 @@ ostream& operator << (ostream& output, Student& that) {
     return output;
 }
 
-int main(int argc, const char * argv[]) {
+int main() {
     string name;
     cout << endl << "Input student name: ";
     getline(cin,name);
     cin.clear();
-    string temp;
+    Student student = Student(name);
     
-    Student student = *new Student(name);
     while (true) {
-        cout << endl << "Next course: ";
+        string temp;
+        cout << endl << "\tNext course: ";
         temp.clear();
         getline(cin,temp);
         cin.clear();
@@ -41,11 +41,16 @@ int main(int argc, const char * argv[]) {
         }
     }
     cout << endl << student;
-    Student student2 = *new Student(student);
-    cout << endl << student;
+    _getch();
+    cout << endl << "Input student name: ";
+    name.clear();
+    getline(cin,name);
+    Student student2 = Student(student);
+    student2.setName(name);
+    cout << endl << student2;
     cout << endl << "Continue? (Y,n): ";
+    string temp;
     getline(cin,temp);
     cin.clear();
-    if (temp!="n"&&temp!="N") main(argc, argv);
-    return 0;
+    if (temp!="n"&&temp!="N") main();
 }

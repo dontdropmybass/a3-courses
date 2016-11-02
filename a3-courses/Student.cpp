@@ -12,18 +12,17 @@
 #include <iostream>
 
 class Student {
-private:
+public:
     std::string name;
     int numCourses = 0;
-    std::string *courseList;
+    std::string *courseList = new std::string;
+    
     Student(){}
     
-public:
-    
-    Student(const std::string& name) : name(name) {}
+    Student(const std::string name) : name(name) {}
     
     Student(const Student& that)
-    : name(that.name), numCourses(that.numCourses), courseList(that.courseList) {
+    : name(that.name), numCourses(that.numCourses), courseList(new std::string(*that.courseList)) {
         std::cout << std::endl << "Copied student." << std::endl;
     }
     
@@ -34,22 +33,37 @@ public:
     friend std::ostream& operator << (const std::ostream& output, const Student& that);
     
     void addCourse(std::string courseName) {
-        std::string *temp = new std::string[numCourses+1];
-        for (int i = 0; i < numCourses; i++) {
+        std::string* temp = new std::string[this->numCourses];
+        
+        for (int i = 0; i < this->numCourses; i++) {
             temp[i] = this->courseList[i];
         }
-        temp[numCourses] = courseName;
-        this->courseList = temp;
+        
+        this->numCourses++;
+        this->courseList = new std::string[this->numCourses];
+        
+        for (int i = 0; i < this->numCourses; i++) {
+            if (i == this->numCourses - 1) {
+                this->courseList[i] =  courseName;
+            }
+            else {
+                this->courseList[i] = temp[i];
+            }
+        }
+        
         delete[] temp;
-        numCourses++;
     }
     
     std::string getCourses() {
-        return *this->courseList;
+        return * this->courseList;
     }
     
     std::string getName() {
         return this->name;
+    }
+    
+    void setName(std::string name) {
+        this->name=name;
     }
     
     int getNumCourses() {
@@ -59,7 +73,7 @@ public:
     // Destructor
     ~Student() {
         std::cout << std::endl << "Deleted student named " << this->name << std::endl;
-        try{delete[]this->courseList;}catch(...){}
+        delete this->courseList;
     }
     
 };
