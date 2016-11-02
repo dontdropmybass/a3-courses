@@ -12,10 +12,10 @@
 using namespace std;
 
 ostream& operator << (ostream& output, Student& that) {
-    output << "Student " << that.getName() << ":" << endl << endl;
+    output << "Student " << that.name << ":" << endl << endl;
     output << "Courses:" << endl;
-    for (int i = 0; i < that.getNumCourses(); i++) {
-        output << "\tCourse #" << i+1 << ": " << that.getCourses()[i] << endl;
+    for (int i = 0; i < that.numCourses; i++) {
+        output << "\tCourse #" << i+1 << ": " << that.courseList[i] << endl;
     }
     return output;
 }

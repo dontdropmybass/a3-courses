@@ -15,14 +15,18 @@ class Student {
 public:
     std::string name;
     int numCourses = 0;
-    std::string *courseList = new std::string;
+    std::string *courseList = new std::string[numCourses];
     
     Student(){}
     
     Student(const std::string name) : name(name) {}
     
     Student(const Student& that)
-    : name(that.name), numCourses(that.numCourses), courseList(new std::string(*that.courseList)) {
+    : name(that.name), numCourses(that.numCourses) {
+        this->courseList = new std::string[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            this->courseList[i] = that.courseList[i];
+        }
         std::cout << std::endl << "Copied student." << std::endl;
     }
     
@@ -54,14 +58,6 @@ public:
         delete[] temp;
     }
     
-    std::string getCourses() {
-        return * this->courseList;
-    }
-    
-    std::string getName() {
-        return this->name;
-    }
-    
     void setName(std::string name) {
         this->name=name;
     }
@@ -73,7 +69,7 @@ public:
     // Destructor
     ~Student() {
         std::cout << std::endl << "Deleted student named " << this->name << std::endl;
-        delete this->courseList;
+        delete [] courseList;
     }
     
 };
