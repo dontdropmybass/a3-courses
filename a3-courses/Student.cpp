@@ -40,6 +40,7 @@ public:
     
     //  sets one student object equal to another
     Student& operator=(const Student& that) {
+        std::cout << std::endl << "Assigned " << that.name << " to new student." << std::endl;
         return *new Student(that);
     }
     
